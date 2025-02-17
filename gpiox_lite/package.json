@@ -1,0 +1,11 @@
+{
+    "name": "gpiox_lite",
+    "version": "1.0.1",
+    "description": "node.js addons gpiox_lite example",
+    "main": "gpiox_lite.js",
+    "dependencies": {
+        "node-addon-api": "*",
+        "bindings": "*" 
+    },
+    "gypfile": true
+}
