@@ -1,6 +1,6 @@
 # @iiot2k/gpiox_lite
 
-Raspberry Pi gpio node.js addon example 
+gpio C++ addon example 
 
 ## Detail
 This example shows the use of Raspberry Pi GPIO in node.js as an addon module.<br>
