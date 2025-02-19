@@ -41,19 +41,19 @@ const char* error_text();
  * use ULN2803A (low switch) or TBD62783 (high switch) for drive output
  */
 enum {
-    GPIO_MODE_INPUT_NOPULL = 0, // floating input (used in init_gpio or change_gpio)
-    GPIO_MODE_INPUT_PULLDOWN,   // pulldown resistor input (used in init_gpio or change_gpio)
-    GPIO_MODE_INPUT_PULLUP,     // pullup resistor input (used in init_gpio or change_gpio)
-    GPIO_MODE_OUTPUT,           // output (used in init_gpio or change_gpio)
-    GPIO_MODE_OUTPUT_SOURCE,    // output source (Hi-Z on 0) (used in init_gpio or change_gpio)
-    GPIO_MODE_OUTPUT_SINK,      // output sink (Hi-Z on 0) (used in init_gpio or change_gpio)
+    GPIO_MODE_INPUT_NOPULL = 0, // floating input
+    GPIO_MODE_INPUT_PULLDOWN,   // pulldown resistor input
+    GPIO_MODE_INPUT_PULLUP,     // pullup resistor input
+    GPIO_MODE_OUTPUT,           // output
+    GPIO_MODE_OUTPUT_SOURCE,    // output source (Hi-Z on 0)
+    GPIO_MODE_OUTPUT_SINK,      // output sink (Hi-Z on 0)
 };
 
 /**
  * @brief init gpio input/output with mode
  * @param pin gpio pin (0..27)
- * @param mode GPIO_MODE_INPUT_.. or GPIO_MODE_OUTPUT..
- * @param setval debounce time in us for inputs, 0/1 or true/false for output
+ * @param mode GPIO_MODE_..
+ * @param setval debounce time in us for inputs, 0/1 or true/false for outputs
  * @returns true on ok, false on error (error_text() returns reason)
  * @note setval 0 for inputs disables debounce
  */
