@@ -1,5 +1,5 @@
 /*
- * C++ library for mcp23017 16-Bit I2C I/O Expander with Serial Interface
+ * C++ library for mcp23017/mcp23008 I2C I/O Expander with Serial Interface
  *
  * (c) Derya Y. iiot2k@gmail.com
  *
