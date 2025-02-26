@@ -38,8 +38,8 @@ enum {
  */
 enum {
     PORT_A = 0, // addresses port A
-    PORT_B,		// addresses port B
-    PORT_AB,	// addresses port A and B
+    PORT_B,     // addresses port B
+    PORT_AB,    // addresses port A and B
     PORT_8,     // addresses port of mcp23008
 };
 
