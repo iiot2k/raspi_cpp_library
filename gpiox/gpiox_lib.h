@@ -3,8 +3,6 @@
  * (c) Derya Y. iiot2k@gmail.com
  *
  * Raspberry Pi gpio c++ library
- *
- * the library uses the gpio character devices interface (V2) from the Linux operating system
  * 
  * link library with your application
  * libgpiox_arm64.a on 64bit OS
@@ -14,10 +12,6 @@
  */
 
 #pragma once
-
-#include <vector>
-#include <string>
-using namespace std;
 
 #include <stdint.h>
 
@@ -29,48 +23,40 @@ namespace gpiox {
  */
 const char* error_text();
 
-/************** GPIO initialization functions **************/
-
 /**
  * @brief gpio modes
- * @note floating input/output is used when the pin is connected to another pin
- * input voltages more than +3.3V can destroy the input
- * Hi-Z refers to an output signal state in which the signal is not being driven
- * please do not init gpio pins with special functions (i2c, spi, uart..)
- * gpio output current is limited
- * use ULN2803A (low switch) or TBD62783 (high switch) for drive output
  */
 enum {
     GPIO_MODE_INPUT_NOPULL = 0, // floating input
-    GPIO_MODE_INPUT_PULLDOWN,   // pulldown resistor input
-    GPIO_MODE_INPUT_PULLUP,     // pullup resistor input
+    GPIO_MODE_INPUT_PULLDOWN,   // input with pull down resistor
+    GPIO_MODE_INPUT_PULLUP,     // input with pull up resistor
     GPIO_MODE_OUTPUT,           // output
-    GPIO_MODE_OUTPUT_SOURCE,    // output source (Hi-Z on 0)
-    GPIO_MODE_OUTPUT_SINK,      // output sink (Hi-Z on 0)
+    GPIO_MODE_OUTPUT_SOURCE,    // output source, Hi-Z on 0, connect to +3.3V on 1
+    GPIO_MODE_OUTPUT_SINK,      // output sink, Hi-Z on 0, connect to ground on 1
 };
 
 /**
  * @brief init gpio input/output with mode
  * @param pin gpio pin (0..27)
- * @param mode GPIO_MODE_..
- * @param setval debounce time in us for inputs, 0/1 or true/false for outputs
- * @returns true on ok, false on error (error_text() returns reason)
+ * @param mode GPIO_MODE_INPUT_.. or GPIO_MODE_OUTPUT..
+ * @param setval debounce time in us for inputs, 0/1 or true/false for output
+ * @returns true on ok, false on error
  * @note setval 0 for inputs disables debounce
  */
 bool init_gpio(uint32_t pin, uint32_t mode, uint32_t setval);
 
 /**
- * @brief deinit gpio
+ * @brief deinits gpio
  * @param pin gpio pin (0..27)
- * @returns true on ok, false on error (error_text() returns reason)
+ * @returns true on ok, false on error
+ *
+ * @note GPIO pin is deinitialized when the program ends
  * @note stops also blink)
  */
 bool deinit_gpio(uint32_t pin);
 
-/************** GPIO Input/Output functions **************/
-
 /**
- * @brief get gpio state
+ * @brief gets gpio state as boolean
  * @param pin gpio pin (0..27)
  * @returns true on active, false on deactive
  */
@@ -86,15 +72,15 @@ uint32_t get_gpio_num(uint32_t pin);
 /**
  * @brief set gpio output
  * @param pin gpio pin (0..27)
- * @param val 0/1 or true/false
- * @returns true on ok, false on error (error_text() returns reason)
+ * @param val state to set 0/1
+ * @returns true on ok, false on error
  */
 bool set_gpio(uint32_t pin, uint32_t val);
 
 /**
  * @brief toggle (change state) of gpio output
  * @param pin gpio pin (0..27)
- * @returns true on ok, false on error (error_text() returns reason)
+ * @returns true on ok, false on error
  */
 bool toggle_gpio(uint32_t pin);
 
@@ -102,14 +88,14 @@ bool toggle_gpio(uint32_t pin);
  * @brief blink gpio output on period
  * @param pin gpio pin (0..27)
  * @param period blink period in ms (1..), 0 stops blink
- * @returns true on ok, false on error (error_text() returns reason)
+ * @returns true on ok, false on error
  */
 bool blink_gpio(uint32_t pin, uint32_t period);
 
 /**
  * @brief stop gpio blink and set output to 0
  * @param pin gpio pin (0..27)
- * @returns true on ok, false on error (error_text() returns reason)
+ * @returns true on ok, false on error
  * @note call of read/write/toggle functions stops also blink
  */
 bool stop_blink_gpio(uint32_t pin);
